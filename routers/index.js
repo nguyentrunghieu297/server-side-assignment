@@ -1,13 +1,11 @@
-const authRouter = require('./auth');
-const watchRouter = require('./watch');
 const memberRouter = require('./member');
+const watchRouter = require('./watch');
 const brandRouter = require('./brand');
+const commentRouter = require('./comment');
 
-function routes(app) {
-  app.use('/auth', authRouter);
-  app.use('/watch', watchRouter);
+module.exports = (app) => {
   app.use('/member', memberRouter);
+  app.use('/watch', watchRouter);
   app.use('/brand', brandRouter);
-}
-
-module.exports = routes;
+  app.use('/comment', commentRouter);
+};

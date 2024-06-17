@@ -12,7 +12,7 @@ const watchController = {
 
   getWatchById: async (req, res) => {
     try {
-      const watch = await Watch.findById(req.params.id);
+      const watch = await Watch.findById(req.params.id).populate('brand');
       res.status(200).json(watch);
     } catch (error) {
       res.status(500).json({ error: error.message });

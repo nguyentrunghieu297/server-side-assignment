@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
-const memberSchema = new Schema(
+const memberSchema = new mongoose.Schema(
   {
-    memberName: { type: String, require: true },
+    username: { type: String, require: true },
     password: { type: String, require: true },
-    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
