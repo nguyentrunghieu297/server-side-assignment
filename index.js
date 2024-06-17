@@ -12,7 +12,7 @@ app.use(express.json());
 dotenv.config();
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGODB)
   .then(() => {
     console.log('MongoDB connected successfully');
   })
