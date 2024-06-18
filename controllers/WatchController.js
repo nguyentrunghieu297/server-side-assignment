@@ -1,10 +1,12 @@
 const Watch = require('../models/Watch');
+const { multipleMongooseToObject } = require('../utils/mongoose');
 
 const watchController = {
   getWatch: async (req, res) => {
     try {
       const watch = await Watch.find();
-      res.status(200).json(watch);
+      // res.status(200).json(watch);
+      res.render('home', { watch: multipleMongooseToObject(watch) });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
