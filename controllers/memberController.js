@@ -21,17 +21,6 @@ const memberController = {
     }
   },
 
-  // [POST] /member
-  createMember: async (req, res) => {
-    try {
-      const member = new Member(req.body);
-      await member.save();
-      res.status(201).json(member);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-
   // [PUT] /member/:id
   updateMember: async (req, res) => {
     try {

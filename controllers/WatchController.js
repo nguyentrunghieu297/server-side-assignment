@@ -3,8 +3,8 @@ const Watch = require('../models/Watch');
 const watchController = {
   getWatch: async (req, res) => {
     try {
-      const watchs = await Watch.find();
-      res.status(200).json(watchs);
+      const watch = await Watch.find();
+      res.status(200).json(watch);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

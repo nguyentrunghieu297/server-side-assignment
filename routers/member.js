@@ -1,19 +1,17 @@
 const router = require('express').Router();
 const memberController = require('../controllers/memberController');
+const { verifyTokenAndAdmin } = require('../controllers/middlewareController');
 
 // [GET] /member
-router.get('/', memberController.getMember);
+router.get('/', verifyTokenAndAdmin, memberController.getMember);
 
 // [GET] /member/:id
-router.get('/:id', memberController.getMemberById);
-
-// [POST] /member
-router.post('/', memberController.createMember);
+router.get('/:id', verifyTokenAndAdmin, memberController.getMemberById);
 
 // [PUT] /member/:id
-router.put('/:id', memberController.updateMember);
+router.put('/:id', verifyTokenAndAdmin, memberController.updateMember);
 
 // [DELETE] /member/:id
-router.delete('/:id', memberController.deleteMember);
+router.delete('/:id', verifyTokenAndAdmin, memberController.deleteMember);
 
 module.exports = router;

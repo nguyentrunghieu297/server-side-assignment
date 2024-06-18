@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const morgan = require('morgan');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const handlebars = require('express-handlebars');
 const routes = require('./routers');
 
@@ -15,6 +16,7 @@ const app = express();
 dotenv.config();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+app.use(cookieParser());
 
 // Body parser
 app.use(express.json());

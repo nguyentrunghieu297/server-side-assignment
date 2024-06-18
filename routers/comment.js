@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const commentController = require('../controllers/commentController');
+const {
+  verifyTokenAndUserAuthorization,
+} = require('../controllers/middlewareController');
 
 // [GET] /comment
 router.get('/', commentController.getComment);
@@ -8,12 +11,24 @@ router.get('/', commentController.getComment);
 router.get('/:id', commentController.getCommentById);
 
 // [POST] /comment
-router.post('/', commentController.createComment);
+router.post(
+  '/',
+  verifyTokenAndUserAuthorization,
+  commentController.createComment
+);
 
 // [PUT] /comment/:id
-router.put('/:id', commentController.updateComment);
+router.put(
+  '/:id',
+  verifyTokenAndUserAuthorization,
+  commentController.updateComment
+);
 
 // [DELETE] /comment/:id
-router.delete('/:id', commentController.deleteComment);
+router.delete(
+  '/:id',
+  verifyTokenAndUserAuthorization,
+  commentController.deleteComment
+);
 
 module.exports = router;
