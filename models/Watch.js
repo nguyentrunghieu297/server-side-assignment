@@ -11,6 +11,7 @@ const watchSchema = new mongoose.Schema(
       ref: 'Brand',
       require: true,
     },
+    image: { type: String },
   },
   { timestamps: true }
 );

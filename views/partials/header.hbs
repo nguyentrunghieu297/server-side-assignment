@@ -1,13 +1,37 @@
-<div class="bg-body-tertiary">
-<div class="container">
-  <nav class="navbar">
-  <div class="container-fluid">
-    <a class="navbar-brand">Navbar</a>
-    <form class="d-flex jus" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
+<div class='bg-body-tertiary'>
+  <div class='container'>
+    <nav class='navbar'>
+      <div class='container-fluid'>
+        <a href='/' class='navbar-brand'>Watch Store</a>
+        {{#if session.userId}}
+          <form class='d-flex g-2' role='search'>
+
+            <input
+              class='form-control me-2'
+              type='search'
+              placeholder='Search'
+              aria-label='Search'
+            />
+            <button
+              class='btn btn-outline-success'
+              type='submit'
+            >Search</button>
+
+          </form>
+          <form action='/auth/logout' method='get'>
+            <button class='btn btn-outline-success'>Logout</button>
+          </form>
+        {{else}}
+          <div class='btn-group btn-group-md btn-group-justified'>
+
+            <a href='/auth/login' class='btn btn-outline-success'>Login</a>
+            <a
+              href='/auth/register'
+              class='btn btn-outline-success'
+            >Register</a>
+          </div>
+        {{/if}}
+      </div>
+    </nav>
   </div>
-</nav>
-</div>
 </div>

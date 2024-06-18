@@ -1,28 +1,19 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const flash = require('connect-flash');
 const Member = require('../models/Member');
 
 let refreshTokens = [];
 
 const authController = {
-  //REGISTER
-  registerUser: async (req, res) => {
-    try {
-      const salt = await bcrypt.genSalt(10);
-      const hashed = await bcrypt.hash(req.body.password, salt);
+  // RENDER LOGIN PAGE
+  renderLoginPage: (req, res) => {
+    res.render('login');
+  },
 
-      //Create new user
-      const newMember = await new Member({
-        username: req.body.username,
-        password: hashed,
-      });
-
-      //Save user to DB
-      const user = await newMember.save();
-      res.status(200).json(user);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+  // RENDER REGISTER PAGE
+  renderRegisterPage: (req, res) => {
+    res.render('register');
   },
 
   // GENERATE ACCESS TOKEN
@@ -33,7 +24,7 @@ const authController = {
         isAdmin: user.isAdmin,
       },
       process.env.JWT_ACCESS_TOKEN,
-      { expiresIn: '30m' }
+      { expiresIn: '24h' }
     );
   },
 
@@ -49,19 +40,57 @@ const authController = {
     );
   },
 
+  //REGISTER
+  registerUser: async (req, res) => {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(req.body.password, salt);
+
+      //Create new user
+      const newMember = await new Member({
+        username: req.body.username,
+        password: hashed,
+      });
+
+      //Save user to DB
+      const user = await newMember.save();
+      // res.status(200).json(user);
+      res.redirect('/auth/login');
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  },
+
+  // REGISTER SERVER SIDE
+  registerServerSide: async (req, res) => {
+    const { username, password } = req.body;
+    const user = await Member.findOne({ username });
+    if (user) {
+      return res.redirect('/register');
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashed = await bcrypt.hash(password, salt);
+    const newUser = new Member({
+      username,
+      password: hashed,
+    });
+    await newUser.save();
+    res.redirect('/login');
+  },
+
   //LOGIN
   loginUser: async (req, res) => {
     try {
       const member = await Member.findOne({ username: req.body.username });
       if (!member) {
-        res.status(404).json('Incorrect username');
+        return res.status(404).json('Incorrect username');
       }
       const validPassword = await bcrypt.compare(
         req.body.password,
         member.password
       );
       if (!validPassword) {
-        res.status(404).json('Incorrect password');
+        return res.status(404).json('Incorrect password');
       }
       if (member && validPassword) {
         //Generate access token
@@ -77,11 +106,28 @@ const authController = {
           sameSite: 'strict',
         });
         const { password, ...others } = member._doc;
-        res.status(200).json({ ...others, accessToken, refreshToken });
+        return res.status(200).json({ ...others, accessToken, refreshToken });
       }
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
+  },
+
+  // LOGIN SERVER SIDE
+  loginServerSide: async (req, res) => {
+    const { username, password } = req.body;
+
+    const user = await Member.findOne({ username });
+    if (!user) {
+      return res.redirect('/login');
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res.redirect('/login');
+    }
+    req.session.userId = user._id;
+    res.redirect('/');
   },
 
   // REFRESH TOKEN
@@ -108,7 +154,7 @@ const authController = {
         path: '/',
         sameSite: 'strict',
       });
-      res.status(200).json({
+      return res.status(200).json({
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
       });
@@ -120,7 +166,24 @@ const authController = {
     //Clear cookies when user logs out
     refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
     res.clearCookie('refreshToken');
-    res.status(200).json('Logged out successfully!');
+    return res.status(200).json('Logged out successfully!');
+  },
+
+  // LOGOUT SERVER SIDE
+  logOutServerSide: async (req, res) => {
+    try {
+      await new Promise((resolve, reject) => {
+        req.session.destroy((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+      res.clearCookie('connect.sid');
+      res.redirect('/login');
+    } catch (err) {
+      console.error('Error during logout:', err);
+      res.status(500).send('Internal Server Error');
+    }
   },
 };
 

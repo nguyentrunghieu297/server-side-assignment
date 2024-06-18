@@ -1,0 +1,43 @@
+<div class='container'>
+  <div class='row justify-content-center mt-5'>
+    <div class='col-md-6'>
+      <div class='card'>
+        <div class='card__header card__header--primary'>
+          <h4 class='card__title'>Đăng ký</h4>
+        </div>
+        <div class='card__body'>
+          <form class='form' action='' method='POST'>
+            <div class='form__group'>
+              <label class='form__label' for='username'>Tên đăng nhập</label>
+              <input
+                type='text'
+                class='form__input'
+                name='username'
+                id='username'
+                placeholder='Nhập tên đăng nhập'
+              />
+            </div>
+            <div class='form__group'>
+              <label class='form__label' for='password'>Mật khẩu</label>
+              <input
+                type='password'
+                class='form__input'
+                name='password'
+                id='password'
+                placeholder='Nhập mật khẩu'
+              />
+            </div>
+            <button type='submit' class='btn btn--primary btn--block'>Đăng ký</button>
+          </form>
+          {{#if success}}
+            <div class='alert alert-success'>{{success}}</div>
+          {{/if}}
+
+          {{#if error}}
+            <div class='alert alert-danger'>{{error}}</div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

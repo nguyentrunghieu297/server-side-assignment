@@ -11,11 +11,7 @@ router.get('/', commentController.getComment);
 router.get('/:id', commentController.getCommentById);
 
 // [POST] /comment
-router.post(
-  '/',
-  verifyTokenAndUserAuthorization,
-  commentController.createComment
-);
+router.post('/', commentController.createComment);
 
 // [PUT] /comment/:id
 router.put(

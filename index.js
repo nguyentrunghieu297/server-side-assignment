@@ -3,9 +3,11 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const flash = require('connect-flash');
 const jwt = require('jsonwebtoken');
 const morgan = require('morgan');
 const path = require('path');
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const handlebars = require('express-handlebars');
 const routes = require('./routers');
@@ -17,6 +19,7 @@ dotenv.config();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(cookieParser());
+app.use(flash());
 
 // Body parser
 app.use(express.json());
@@ -44,6 +47,21 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+// Sessions
+app.use(
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// Middleware
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 // Routes
 routes(app);

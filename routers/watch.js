@@ -7,10 +7,10 @@ router.get('/', watchController.getWatch);
 // [GET] /watch/:id
 router.get('/:id', watchController.getWatchById);
 // [POST] /watch
-router.post('/', verifyTokenAndAdmin, watchController.createWatch);
+router.post('/', watchController.createWatch);
 // [PUT] /watch/:id
-router.put('/:id', verifyTokenAndAdmin, watchController.updateWatch);
+router.put('/:id', watchController.updateWatch);
 // [DELETE] /watch/:id
-router.delete('/:id', verifyTokenAndAdmin, watchController.deleteWatch);
+router.delete('/:id', watchController.deleteWatch);
 
 module.exports = router;

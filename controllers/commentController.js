@@ -13,7 +13,7 @@ const commentController = {
   // [GET] /comment/:id
   getCommentById: async (req, res) => {
     try {
-      const comment = await Comment.findById(req.params.id);
+      const comment = await Comment.findById(req.params.id).populate('author');
       res.status(200).json(comment);
     } catch (error) {
       res.status(500).json({ error: error.message });
