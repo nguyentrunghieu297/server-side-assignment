@@ -11,6 +11,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const handlebars = require('express-handlebars');
+const helpers = require('./views/helpers/helpers');
 const routes = require('./routers');
 
 const app = express();
@@ -34,6 +35,7 @@ app.engine(
   'hbs',
   handlebars.engine({
     extname: '.hbs',
+    helpers: helpers,
   })
 );
 app.set('view engine', 'hbs');

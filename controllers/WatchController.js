@@ -1,4 +1,6 @@
 const Watch = require('../models/Watch');
+const Brand = require('../models/Brand');
+const mongoose = require('mongoose');
 const {
   multipleMongooseToObject,
   mongooseToObject,
@@ -8,8 +10,14 @@ const watchController = {
   getWatch: async (req, res) => {
     try {
       const watch = await Watch.find();
+      const brand = await Brand.find();
+      const selectedBrandId = req.query.selectedBrandId || null;
       // res.status(200).json(watch);
-      res.render('home', { watch: multipleMongooseToObject(watch) });
+      res.render('home', {
+        watch: multipleMongooseToObject(watch),
+        brand: multipleMongooseToObject(brand),
+        selectedBrandId,
+      });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -17,6 +25,10 @@ const watchController = {
 
   getWatchById: async (req, res) => {
     try {
+      const isValidObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
+      if (!isValidObjectId) {
+        return res.status(400).json({ error: 'Invalid Object ID' });
+      }
       const watch = await Watch.findById(req.params.id).populate('brand');
       // res.status(200).json(watch);
       res.render('detail', { watch: mongooseToObject(watch) });

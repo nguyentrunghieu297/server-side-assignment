@@ -7,7 +7,7 @@ const authRouter = require('./auth');
 module.exports = (app) => {
   app.use('/auth', authRouter);
   app.use('/member', memberRouter);
-  app.use('/', watchRouter);
+  app.use('/watch', watchRouter);
   app.use('/brand', brandRouter);
   app.use('/comment', commentRouter);
 };

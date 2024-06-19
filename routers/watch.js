@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const watchController = require('../controllers/WatchController');
+const watchController = require('../controllers/watchController');
 const { verifyTokenAndAdmin } = require('../controllers/middlewareController');
+const brandController = require('../controllers/brandController');
 
 // [GET] /watch
 router.get('/', watchController.getWatch);

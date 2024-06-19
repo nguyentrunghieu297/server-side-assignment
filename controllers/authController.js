@@ -67,7 +67,7 @@ const authController = {
     const { username, password } = req.body;
     const user = await Member.findOne({ username });
     if (user) {
-      return res.redirect('/register');
+      return res.send('Username already exists');
     }
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, salt);
@@ -76,7 +76,7 @@ const authController = {
       password: hashed,
     });
     await newUser.save();
-    res.redirect('/login');
+    res.redirect('/auth/login');
   },
 
   //LOGIN
@@ -129,7 +129,7 @@ const authController = {
     }
     req.session.userId = user._id;
     req.session.userName = user.username;
-    res.redirect('/');
+    res.redirect('/watch');
   },
 
   // REFRESH TOKEN
@@ -175,7 +175,7 @@ const authController = {
   logOutServerSide: async (req, res) => {
     req.session.destroy();
     res.render('home', { session: req.session });
-    res.redirect('/');
+    res.redirect('/watch');
   },
 };
 
