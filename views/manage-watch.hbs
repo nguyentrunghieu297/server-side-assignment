@@ -1,0 +1,49 @@
+<div class='container mt-5'>
+  <div class='d-flex justify-content-between my-4'>
+    <h2>Watch Management</h2>
+    <a href='/admin/watch/create' class='btn btn-success'>Add watch</a>
+  </div>
+
+  <table class='table table-bordered'>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Brand</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each watch}}
+        <tr>
+          <td>{{sum @index 1}}</td>
+          <td>{{this.name}}</td>
+          <td>{{this.description}}</td>
+          <td>${{this.price}}</td>
+          <td>{{this.brand.brandName}}</td>
+          <td><img src='{{this.image}}' alt='Product Image' /></td>
+          <td class='d-flex justify-content-around align-items-center gap-2'>
+            <a
+              href='/admin/watch/{{this._id}}/update'
+              class='btn btn-primary btn-sm'
+            >Edit</a>
+            <form
+              action='/admin/watch/{{this._id}}/delete?_method=DELETE'
+              method='POST'
+              class='mt-3'
+            >
+              <input type='hidden' name='_method' value='DELETE' />
+              <button
+                type='submit'
+                class='btn btn-danger btn-sm'
+              >Delete</button>
+            </form>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
 const jwt = require('jsonwebtoken');
+const methodOverride = require('method-override');
 const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
@@ -20,6 +21,7 @@ const app = express();
 dotenv.config();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.use(flash());
 

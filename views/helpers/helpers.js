@@ -17,6 +17,8 @@ const helpers = {
       watch.name.toLowerCase().includes(lowerCaseQuery)
     );
   },
+
+  sum: (a, b) => a + b,
 };
 
 module.exports = helpers;

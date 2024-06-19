@@ -1,0 +1,63 @@
+<div class='container mt-5'>
+  <h2>Update Watch</h2>
+  <form action='/admin/watch/{{watch._id}}/store?_method=PUT' method='POST'>
+    <div class='mb-3'>
+      <label for='name' class='form-label'>Name</label>
+      <input
+        type='text'
+        class='form-control'
+        id='name'
+        name='name'
+        value='{{watch.name}}'
+        required
+      />
+    </div>
+    <div class='mb-3'>
+      <label for='description' class='form-label'>Description</label>
+      <textarea
+        class='form-control'
+        id='description'
+        name='description'
+        rows='3'
+        required
+      >{{watch.description}}</textarea>
+    </div>
+    <div class='mb-3'>
+      <label for='price' class='form-label'>Price</label>
+      <input
+        type='number'
+        class='form-control'
+        id='price'
+        name='price'
+        min='0'
+        value='{{watch.price}}'
+        required
+      />
+    </div>
+    <div class='mb-3'>
+      <label for='brand' class='form-label'>Brand</label>
+      <select class='form-control' id='brand' name='brand' required>
+        <option value='{{watch.brand._id}}'>{{watch.brand.brandName}}</option>
+        {{#each brands}}
+          <option value='{{this._id}}'>{{this.brandName}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class='mb-3'>
+      <label for='image' class='form-label'>Image URL</label>
+      <input
+        type='text'
+        class='form-control'
+        id='image'
+        name='image'
+        value='{{watch.image}}'
+        required
+      />
+    </div>
+    <input type='hidden' name='_method' value='PUT' />
+    <div class='d-flex justify-content-end g-2'>
+      <button class='btn btn-danger mx-2'>Cancel</button>
+      <button type='submit' class='btn btn-primary'>Done</button>
+    </div>
+  </form>
+</div>

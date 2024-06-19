@@ -71,3 +71,9 @@ body {
 .btn--block {
   display: block;
   width: 100%; }
+
+.table img {
+  max-width: 100px;
+  height: auto;
+  display: block;
+  margin: 0 auto; }

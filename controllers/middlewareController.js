@@ -38,7 +38,16 @@ const verifyTokenAndAdmin = (req, res, next) => {
   });
 };
 
+const isAdminMiddleware = (req, res, next) => {
+  if (req.session && req.session.isAdmin) {
+    next();
+  } else {
+    res.status(403).send('Access denied.');
+  }
+};
+
 module.exports = {
+  isAdminMiddleware,
   verifyToken,
   verifyTokenAndUserAuthorization,
   verifyTokenAndAdmin,

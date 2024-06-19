@@ -25,6 +25,24 @@ const watchController = {
     }
   },
 
+  getWatchAdmin: async (req, res) => {
+    try {
+      const watch = await Watch.find().populate('brand');
+      const brand = await Brand.find();
+      const selectedBrandId = req.query.selectedBrandId || null;
+      const searchQuery = req.query.searchQuery || null;
+      // res.status(200).json(watch);
+      res.render('manage-watch', {
+        watch: multipleMongooseToObject(watch),
+        brand: multipleMongooseToObject(brand),
+        selectedBrandId,
+        searchQuery,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   getWatchById: async (req, res) => {
     try {
       const isValidObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
@@ -39,11 +57,35 @@ const watchController = {
     }
   },
 
+  viewCreateWatch: async (req, res) => {
+    try {
+      const brand = await Brand.find();
+      res.render('create-watch', { brands: multipleMongooseToObject(brand) });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   createWatch: async (req, res) => {
     try {
       const watch = new Watch(req.body);
       await watch.save();
-      res.status(201).json(watch);
+      res.redirect('/admin/watch');
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  viewUpdateWatch: async (req, res) => {
+    try {
+      const watch = await Watch.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      }).populate('brand');
+      const brand = await Brand.find();
+      res.render('update-watch', {
+        watch: mongooseToObject(watch),
+        brands: multipleMongooseToObject(brand),
+      });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -54,7 +96,7 @@ const watchController = {
       const watch = await Watch.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       });
-      res.status(200).json(watch);
+      res.redirect('/admin/watch');
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -63,7 +105,8 @@ const watchController = {
   deleteWatch: async (req, res) => {
     try {
       const watch = await Watch.findByIdAndDelete(req.params.id);
-      res.status(200).json(watch);
+      // res.status(200).json(watch);
+      res.redirect('/admin/watch');
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

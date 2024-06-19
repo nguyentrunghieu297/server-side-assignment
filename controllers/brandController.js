@@ -1,10 +1,15 @@
 const Brand = require('../models/Brand');
+const {
+  multipleMongooseToObject,
+  mongooseToObject,
+} = require('../utils/mongoose');
 
 const brandController = {
   getBrand: async (req, res) => {
     try {
       const brands = await Brand.find();
-      res.status(200).json(brands);
+      // res.status(200).json(brands);
+      res.render('manage-brand', { brands: multipleMongooseToObject(brands) });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -19,11 +24,29 @@ const brandController = {
     }
   },
 
+  viewCreateBrand: async (req, res) => {
+    try {
+      res.render('create-brand');
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   createBrand: async (req, res) => {
     try {
       const brand = new Brand(req.body);
       await brand.save();
-      res.status(201).json(brand);
+      // res.status(201).json(brand);
+      res.redirect('/admin/brand');
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  viewUpdateBrand: async (req, res) => {
+    try {
+      const brand = await Brand.findById(req.params.id);
+      res.render('update-brand', { brand: mongooseToObject(brand) });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -34,7 +57,8 @@ const brandController = {
       const brand = await Brand.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       });
-      res.status(200).json(brand);
+      // res.status(200).json(brand);
+      res.redirect('/admin/brand');
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -43,7 +67,8 @@ const brandController = {
   deleteBrand: async (req, res) => {
     try {
       const brand = await Brand.findByIdAndDelete(req.params.id);
-      res.status(200).json(brand);
+      // res.status(200).json(brand);
+      res.redirect('/admin/brand');
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
