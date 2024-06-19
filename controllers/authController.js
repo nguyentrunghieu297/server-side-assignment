@@ -6,6 +6,30 @@ const session = require('express-session');
 
 let refreshTokens = [];
 
+const validateUsername = (username) => {
+  if (!username || typeof username !== 'string') {
+    return false;
+  }
+  if (username.length < 3 || username.length > 20) {
+    return false;
+  }
+  if (!/^[a-zA-Z0-9_\-]+$/.test(username)) {
+    return false;
+  }
+  return true;
+};
+
+const validatePassword = (password) => {
+  if (!password || typeof password !== 'string') {
+    return false;
+  }
+  if (password.length < 8) {
+    return false;
+  }
+  // Additional checks for password complexity can be added here
+  return true;
+};
+
 const authController = {
   // RENDER LOGIN PAGE
   renderLoginPage: (req, res) => {
@@ -44,6 +68,17 @@ const authController = {
   //REGISTER
   registerUser: async (req, res) => {
     try {
+      const { username, password } = req.body;
+
+      if (!validateUsername(username)) {
+        return res.status(400).json('Invalid username');
+      }
+
+      if (!validatePassword(password)) {
+        return res.status(400).json('Invalid password');
+      }
+
+      //Hash password
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(req.body.password, salt);
 
