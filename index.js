@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const handlebars = require('express-handlebars');
 const routes = require('./routers');
@@ -54,6 +55,7 @@ app.use(
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB }),
   })
 );
 

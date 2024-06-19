@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const flash = require('connect-flash');
 const Member = require('../models/Member');
+const session = require('express-session');
 
 let refreshTokens = [];
 
@@ -127,6 +128,7 @@ const authController = {
       return res.redirect('/login');
     }
     req.session.userId = user._id;
+    req.session.userName = user.username;
     res.redirect('/');
   },
 
@@ -171,19 +173,9 @@ const authController = {
 
   // LOGOUT SERVER SIDE
   logOutServerSide: async (req, res) => {
-    try {
-      await new Promise((resolve, reject) => {
-        req.session.destroy((err) => {
-          if (err) reject(err);
-          else resolve();
-        });
-      });
-      res.clearCookie('connect.sid');
-      res.redirect('/login');
-    } catch (err) {
-      console.error('Error during logout:', err);
-      res.status(500).send('Internal Server Error');
-    }
+    req.session.destroy();
+    res.render('home', { session: req.session });
+    res.redirect('/');
   },
 };
 

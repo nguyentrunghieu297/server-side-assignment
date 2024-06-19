@@ -3,7 +3,7 @@
     <nav class='navbar'>
       <div class='container-fluid'>
         <a href='/' class='navbar-brand'>Watch Store</a>
-        {{#if session.userId}}
+        {{#if session.userName}}
           <form class='d-flex g-2' role='search'>
 
             <input
@@ -18,9 +18,12 @@
             >Search</button>
 
           </form>
-          <form action='/auth/logout' method='get'>
-            <button class='btn btn-outline-success'>Logout</button>
-          </form>
+          <div class='d-flex g-2 align-items-center'>
+            <h4 class='m-2'>{{session.userName}}</h4>
+            {{! <a href='/auth/logout' class='btn btn-outline-success'>Logout</a> }}
+            <form action='/auth/logout' method='get'>
+              <button class='btn btn-outline-success'>Logout</button></form>
+          </div>
         {{else}}
           <div class='btn-group btn-group-md btn-group-justified'>
 
