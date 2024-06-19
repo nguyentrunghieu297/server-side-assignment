@@ -12,11 +12,13 @@ const watchController = {
       const watch = await Watch.find();
       const brand = await Brand.find();
       const selectedBrandId = req.query.selectedBrandId || null;
+      const searchQuery = req.query.searchQuery || null;
       // res.status(200).json(watch);
       res.render('home', {
         watch: multipleMongooseToObject(watch),
         brand: multipleMongooseToObject(brand),
         selectedBrandId,
+        searchQuery,
       });
     } catch (error) {
       res.status(500).json({ error: error.message });

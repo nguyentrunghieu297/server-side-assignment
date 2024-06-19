@@ -4,20 +4,6 @@
       <div class='container-fluid'>
         <a href='/watch' class='navbar-brand'>Watch Store</a>
         {{#if session.userName}}
-          <form class='d-flex g-2' role='search'>
-
-            <input
-              class='form-control me-2'
-              type='search'
-              placeholder='Search'
-              aria-label='Search'
-            />
-            <button
-              class='btn btn-outline-success'
-              type='submit'
-            >Search</button>
-
-          </form>
           <div class='d-flex g-2 align-items-center'>
             <h4 class='m-2'>{{session.userName}}</h4>
             {{! <a href='/auth/logout' class='btn btn-outline-success'>Logout</a> }}
