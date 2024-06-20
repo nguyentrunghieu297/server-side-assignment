@@ -1,0 +1,29 @@
+<div class='container mt-5'>
+  <div class='d-flex justify-content-between my-4'>
+    <h2>Member Management</h2>
+  </div>
+
+  <table class='table table-bordered'>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>UserName</th>
+        <th>IsAdmin</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+        {{! <th>Actions</th> }}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each members}}
+        <tr>
+          <td>{{sum @index 1}}</td>
+          <td>{{this.username}}</td>
+          <td>{{this.isAdmin}}</td>
+          <td>${{this.createdAt}}</td>
+          <td>{{this.updatedAt}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

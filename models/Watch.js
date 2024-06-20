@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Brand = require('./Brand');
+const commentSchema = require('./Comment');
 
 const watchSchema = new mongoose.Schema(
   {
@@ -11,6 +12,7 @@ const watchSchema = new mongoose.Schema(
       ref: 'Brand',
       require: true,
     },
+    comments: [commentSchema],
     image: { type: String },
   },
   { timestamps: true }

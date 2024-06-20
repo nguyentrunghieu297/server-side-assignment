@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const brandController = require('../controllers/brandController');
-const watchController = require('../controllers/watchController');
+const watchController = require('../controllers/WatchController');
+const memberController = require('../controllers/memberController');
 const { isAdminMiddleware } = require('../controllers/middlewareController');
 
 // [GET] /admin/watch
@@ -50,5 +51,10 @@ router.delete(
 );
 // [GET] /admin/brand/:id
 router.get('/brand/:id', isAdminMiddleware, brandController.getBrandById);
+
+// ----------------------------------------------------------------
+
+// [GET] /admin/member
+router.get('/member', isAdminMiddleware, memberController.getMember);
 
 module.exports = router;

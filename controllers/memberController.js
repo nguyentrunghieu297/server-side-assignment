@@ -1,11 +1,15 @@
 const Member = require('../models/Member');
+const { multipleMongooseToObject } = require('../utils/mongoose');
 
 const memberController = {
   // [GET] /member
   getMember: async (req, res) => {
     try {
       const members = await Member.find();
-      res.status(200).json(members);
+      // res.status(200).json(members);
+      res.render('manage-member', {
+        members: multipleMongooseToObject(members),
+      });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

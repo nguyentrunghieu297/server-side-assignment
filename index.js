@@ -78,5 +78,5 @@ routes(app);
 app.listen(process.env.PORT, () => {
   console.log('Server started on port http://localhost:' + process.env.PORT);
   const openCommand = process.platform === 'win32' ? 'start' : 'open';
-  exec(`${openCommand} http://localhost:${process.env.PORT}/watch`);
+  // exec(`${openCommand} http://localhost:${process.env.PORT}/watch`);
 });

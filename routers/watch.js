@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const watchController = require('../controllers/watchController');
+const watchController = require('../controllers/WatchController');
 const { verifyTokenAndAdmin } = require('../controllers/middlewareController');
 
 // [POST] /watch
