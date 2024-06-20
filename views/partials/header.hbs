@@ -4,12 +4,30 @@
       <div class='container-fluid'>
         <a href='/watch' class='navbar-brand'>Watch Store</a>
         {{#if session.userName}}
-          <div class='d-flex g-2 align-items-center'>
-            <h4 class='m-2'>{{session.userName}}</h4>
-            {{! <a href='/auth/logout' class='btn btn-outline-success'>Logout</a> }}
-            <form action='/auth/logout' method='get'>
-              <button class='btn btn-outline-success'>Logout</button></form>
-          </div>
+          {{#if session.isAdmin}}
+            <ul class='nav justify-content-center'>
+              <li class='nav-item'>
+                <a class='nav-link' href='/admin/watch'>Watch</a>
+              </li>
+              <li class='nav-item'>
+                <a class='nav-link' href='/admin/brand'>Brand</a>
+              </li>
+              <li class='nav-item'>
+                <a class='nav-link' href='/admin/account'>Account</a>
+              </li>
+            </ul>
+            <div class='d-flex g-2 align-items-center'>
+              <h4 class='m-2'>{{session.userName}}</h4>
+              <form action='/auth/logout' method='get'>
+                <button class='btn btn-outline-success'>Logout</button></form>
+            </div>
+          {{else}}
+            <div class='d-flex g-2 align-items-center'>
+              <h4 class='m-2'>{{session.userName}}</h4>
+              <form action='/auth/logout' method='get'>
+                <button class='btn btn-outline-success'>Logout</button></form>
+            </div>
+          {{/if}}
         {{else}}
           <div class='btn-group btn-group-md btn-group-justified'>
 

@@ -15,6 +15,8 @@ const handlebars = require('express-handlebars');
 const helpers = require('./views/helpers/helpers');
 const routes = require('./routers');
 
+const { exec } = require('child_process');
+
 const app = express();
 
 // Config
@@ -75,4 +77,6 @@ routes(app);
 // Start server
 app.listen(process.env.PORT, () => {
   console.log('Server started on port http://localhost:' + process.env.PORT);
+  const openCommand = process.platform === 'win32' ? 'start' : 'open';
+  exec(`${openCommand} http://localhost:${process.env.PORT}/watch`);
 });

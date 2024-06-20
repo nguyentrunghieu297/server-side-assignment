@@ -77,3 +77,41 @@ body {
   height: auto;
   display: block;
   margin: 0 auto; }
+
+.page-not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+  text-align: center; }
+
+.page-not-found__container {
+  max-width: 600px; }
+
+.page-not-found__code {
+  font-size: 100px;
+  font-weight: bold;
+  color: #343a40; }
+
+.page-not-found__message {
+  font-size: 24px;
+  color: #6c757d;
+  margin-bottom: 20px; }
+
+.page-not-found__button {
+  font-size: 18px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none; }
+
+.page-not-found__button:hover {
+  background-color: #0056b3; }
+
+.page-not-found__illustration {
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto; }

@@ -12,4 +12,8 @@ module.exports = (app) => {
   app.use('/watch', watchRouter);
   app.use('/brand', brandRouter);
   app.use('/comment', commentRouter);
+  // 404
+  app.use('*', (req, res) => {
+    res.status(404).render('not-found');
+  });
 };
