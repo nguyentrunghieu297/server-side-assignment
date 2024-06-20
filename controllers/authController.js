@@ -56,7 +56,7 @@ const authController = {
       //Save user to DB
       const user = await newMember.save();
       // res.status(200).json(user);
-      res.redirect('/auth/login');
+      return res.redirect('/auth/login');
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -76,7 +76,7 @@ const authController = {
       password: hashed,
     });
     await newUser.save();
-    res.redirect('/auth/login');
+    return res.redirect('/auth/login');
   },
 
   //LOGIN

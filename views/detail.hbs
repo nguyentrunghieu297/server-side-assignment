@@ -1,4 +1,33 @@
 <div class='container mt-5'>
+  {{! Thêm phần hiển thị thông báo flash }}
+  {{#if messages.error}}
+    <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+      {{messages.error}}
+      <button
+        type='button'
+        class='close'
+        data-dismiss='alert'
+        aria-label='Close'
+      >
+        <span aria-hidden='true'>&times;</span>
+      </button>
+    </div>
+  {{/if}}
+
+  {{#if messages.success}}
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+      {{messages.success}}
+      <button
+        type='button'
+        class='close'
+        data-dismiss='alert'
+        aria-label='Close'
+      >
+        <span aria-hidden='true'>&times;</span>
+      </button>
+    </div>
+  {{/if}}
+
   <div class='row'>
     <div class='col-md-6'>
       <img
@@ -24,25 +53,32 @@
 
 {{! Thiet ke chuc nang comment va rating o ben duoi }}
 
-<div class='comment-container'>
-  <h2>Leave a Comment and Rating</h2>
-  <form id='commentForm'>
-    <div class='rating'>
-      <span class='star' data-value='5'>★</span>
-      <span class='star' data-value='4'>★</span>
-      <span class='star' data-value='3'>★</span>
-      <span class='star' data-value='2'>★</span>
-      <span class='star' data-value='1'>★</span>
+<div class='comments-section mt-5'>
+  <h3>Comments</h3>
+  {{#each watch.comments}}
+    <div class='card mb-3 shadow-sm'>
+      <div class='card-body'>
+        <h5 class='card-title'><strong>Rating:</strong>
+          {{this.rating}}
+          <span class='text-warning'>&#9733;</span></h5>
+        <p class='card-text'><strong>Comment:</strong> {{this.content}}</p>
+        <footer class='blockquote-footer'>By:
+          <cite title='Source Title'>{{this.author.username}}</cite></footer>
+      </div>
     </div>
-    <textarea
-      id='comment'
-      placeholder='Write your comment here...'
-      required
-    ></textarea>
-    <button type='submit'>Submit</button>
-  </form>
-  <div id='commentsSection'>
-    <h3>Comments</h3>
-    <ul id='commentsList'></ul>
-  </div>
+  {{/each}}
 </div>
+
+<form class='form' action='/watch/{{watch._id}}/comment' method='post'>
+  <div class='title'>Rate and Comment</div>
+  <div class='d-flex gap-2'>
+    <span>Rating</span>
+    <select name='rating' id='rating' class='input' required>
+      <option value='1'>1</option>
+      <option value='2'>2</option>
+      <option value='3'>3</option>
+    </select>
+  </div>
+  <textarea name='content' placeholder='Your comment'></textarea>
+  <button type='submit'>Submit</button>
+</form>

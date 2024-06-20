@@ -4,15 +4,15 @@ const commentSchema = require('./Comment');
 
 const watchSchema = new mongoose.Schema(
   {
-    name: { type: String, require: true },
-    description: { type: String, require: true },
-    price: { type: Number, require: true },
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
     brand: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Brand',
-      require: true,
+      required: true,
     },
-    comments: [commentSchema],
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     image: { type: String },
   },
   { timestamps: true }

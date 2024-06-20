@@ -56,7 +56,8 @@ const watchController = {
           path: 'comments',
           populate: {
             path: 'author',
-            model: 'Members', // Thay thế 'Members' bằng tên model của người dùng
+            model: 'Member',
+            select: 'username',
           },
         });
 

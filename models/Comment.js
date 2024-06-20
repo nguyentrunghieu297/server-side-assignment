@@ -6,11 +6,11 @@ const commentSchema = new mongoose.Schema(
     content: { type: String, require: true },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Members',
-      require: true,
+      ref: 'Member',
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-module.exports = commentSchema;
+module.exports = mongoose.model('Comment', commentSchema);
