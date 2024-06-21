@@ -1,4 +1,5 @@
 const Brand = require('../models/Brand');
+const Watch = require('../models/Watch');
 const {
   multipleMongooseToObject,
   mongooseToObject,
@@ -66,9 +67,14 @@ const brandController = {
 
   deleteBrand: async (req, res) => {
     try {
-      const brand = await Brand.findByIdAndDelete(req.params.id);
+      const watch = await Watch.findOne({ brand: req.params.id });
+      if (watch) {
+        return res.redirect('/admin/brand');
+      } else {
+        await Brand.findByIdAndDelete(req.params.id);
+        return res.redirect('/admin/brand');
+      }
       // res.status(200).json(brand);
-      res.redirect('/admin/brand');
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

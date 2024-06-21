@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 const Brand = require('./Brand');
-const commentSchema = require('./Comment');
+
+const commentSchema = new mongoose.Schema(
+  {
+    rating: { type: Number, min: 1, max: 3, require: true },
+    content: { type: String, require: true },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Member',
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 const watchSchema = new mongoose.Schema(
   {
@@ -12,7 +24,7 @@ const watchSchema = new mongoose.Schema(
       ref: 'Brand',
       required: true,
     },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    comments: [commentSchema],
     image: { type: String },
   },
   { timestamps: true }

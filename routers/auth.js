@@ -5,11 +5,11 @@ const { verifyToken } = require('../controllers/middlewareController');
 // [GET] render login page
 router.get('/login', authController.renderLoginPage);
 
-// [GET] /auth/logout
-router.get('/logout', authController.logOutServerSide);
-
 // [GET] render register page
 router.get('/register', authController.renderRegisterPage);
+
+// [GET] /auth/logout
+router.get('/logout', authController.logOutServerSide);
 
 // [POST] /auth/register
 router.post('/register', authController.registerServerSide);
